@@ -1,7 +1,7 @@
 puts "Enter 3 coeficents a,b,c comma-separated(Example: 5,5,15): "
-sides_triangle = gets.chomp.split(",")
+coeficents = gets.chomp.split(",")
 
-a, b, c = sides_triangle.map(&:to_i)
+a, b, c = coeficents.map(&:to_i)
 
 discriminant = (b**2) - (4 * a * c)
 
