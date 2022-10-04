@@ -1,4 +1,4 @@
-puts "Enter three sides 'a,b,c' of the triangle(Example: 5,5,15): "
+puts "Enter three sides 'a,b,c' comma-separated of the triangle(Example: 5,5,15): "
 sides_triangle = gets.chomp.split(",")
 
 a, b, c = sides_triangle.map(&:to_i).sort
