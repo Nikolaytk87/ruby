@@ -1,13 +1,10 @@
 fibonachi = [0, 1]
-index = 0
-fibonachi.each do |current_num|
-  next_index = index + 1
+fibonachi.each_with_index do |current_num, idx|
   if fibonachi.last > 100
-    fibonachi.delete_at(next_index)
+    fibonachi.delete_at(idx.next)
     break
   end
-  fibonachi << (current_num + fibonachi[next_index])
-  index += 1
+  fibonachi << (current_num + fibonachi[idx.next])
 end
 
 puts fibonachi
