@@ -20,4 +20,5 @@ loop do
   puts "Enter next item...\n "
 end
 
-puts "Items: #{items} \nAmount: #{amount} \nTotal: #{total}"
+amount.each { |item, price| puts "Item: #{item},  total amount: #{price}" }
+puts "Items: #{items}  \nTotal: #{total}"
