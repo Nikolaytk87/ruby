@@ -1,33 +1,27 @@
 class Station
   attr_accessor :trains
+  attr_reader :name
 
   def initialize(name)
     @name = name
     @trains = { cargo: [], passenger: [] }
   end
 
-  def show_trains_by_type(type)
+  def trains_by_type(type)
     trains[type.to_sym]
-  end
-
-  def show_trains
-    trains
   end
 
   def sending_train(train)
     self.trains[train.type.to_sym].delete(train)
-    return @name
   end
 
   def take_train(train)
     self.trains[train.type.to_sym] << train
-    return @name
   end
 end
 
 class Route
   attr_reader :stations
-  attr_accessor :intermediate_stations
 
   def initialize(first_station, last_station)
     @first_station = first_station
@@ -37,12 +31,11 @@ class Route
   end
 
   def add_station(station)
-    @intermediate_stations << station
-    @stations.insert(1, station)
+    @stations.insert(-2, station)
   end
 
   def del_station(station)
-    @intermediate_stations.delete(station)
+    stations.delete(station)
   end
 end
 
@@ -80,7 +73,7 @@ class Train
     previous_index = route.stations.index(current_station) - 1
     previous_station = route.stations[previous_index]
     if previous_index >= 0 && (not previous_station.nil?)
-      return previous_station
+      previous_station
     end
   end
 
@@ -88,7 +81,7 @@ class Train
     next_index = route.stations.index(current_station) + 1
     next_station = route.stations[next_index]
     if not next_station.nil?
-      return next_station
+      next_station
     end
   end
 
