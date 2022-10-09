@@ -87,17 +87,17 @@ class Train
 
   def move_forward
     if next_station
-      self.current_station.sending_train(self)
+      current_station.sending_train(self)
       self.current_station = next_station
-      self.current_station.take_train(self)
+      current_station.take_train(self)
     end
   end
 
   def move_back
     if previous_station
-      self.current_station.sending_train(self)
+      current_station.sending_train(self)
       self.current_station = previous_station
-      self.current_station.take_train(self)
+      current_station.take_train(self)
     end
   end
 end
