@@ -12,11 +12,11 @@ class Station
   end
 
   def sending_train(train)
-    self.trains[train.type.to_sym].delete(train)
+    trains[train.type.to_sym].delete(train)
   end
 
   def take_train(train)
-    self.trains[train.type.to_sym] << train
+    trains[train.type.to_sym] << train
   end
 end
 
@@ -31,7 +31,7 @@ class Route
   end
 
   def add_station(station)
-    @stations.insert(-2, station)
+    stations.insert(-2, station)
   end
 
   def del_station(station)
@@ -66,7 +66,7 @@ class Train
   def add_route(route)
     self.route = route
     self.current_station = route.stations.first
-    self.current_station.take_train(self)
+    current_station.take_train(self)
   end
 
   def previous_station
