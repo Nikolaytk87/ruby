@@ -26,7 +26,6 @@ class Route
   def initialize(first_station, last_station)
     @first_station = first_station
     @last_station = last_station
-    @intermediate_stations = []
     @stations = [first_station, last_station]
   end
 
