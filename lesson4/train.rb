@@ -19,11 +19,11 @@ class Train
   end
 
   def add_wagon(wagon)
-    wagons << wagon if (wagon.type == self.type) && (speed.zero?)
+    wagons << wagon if wagon.type == self.type && speed.zero?
   end
 
   def del_wagon(wagon)
-    wagons.delete(wagon) if (wagon.type == self.type) && (speed.zero?)
+    wagons.delete(wagon) if wagon.type == self.type && speed.zero?
   end
 
   def add_route(route)

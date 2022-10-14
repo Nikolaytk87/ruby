@@ -12,7 +12,11 @@ module StationMenu
   end
 
   def show_stations_by_route(route)
-    route.stations.each { |station| puts station.inspect }
+    if route.instance_of? Route
+      route.stations.each { |station| puts station.inspect }
+    else
+      puts "Такого маршрута #{route} нет"
+    end
   end
 
   def get_station_by_name(name)
@@ -29,17 +33,24 @@ module StationMenu
     stations.each_key { |name| puts name }
   end
 
-  def show_list_trains_by_station
-    station = choice_show_station
-    puts "Список поездов на станции #{station}:"
-    unless station.nil?
-      trains.each { |train| puts train }
-    end
-  end
-
   def choice_show_station
     puts "Введите станцию на которой хотите посмотреть список поездов"
     gets.chomp
+  end
+
+  def show_list_trains_by_station
+    show_stations
+    station_name = choice_show_station
+    station = stations[station_name]
+    unless station.nil?
+      puts "Список поездов на станции #{station_name}:"
+      puts "Грузовые поезда:"
+      station.trains_by_type(:cargo).each { |train| puts train.number }
+      puts "Пассажирские поезда:"
+      station.trains_by_type(:passenger).each { |train| puts train.number }
+    else
+      puts "Такой станции #{station} нет"
+    end
   end
 
   def choice_station_name

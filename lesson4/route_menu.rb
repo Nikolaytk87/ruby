@@ -54,9 +54,10 @@ module RouteMenu
     station_name = choice_station_name
     operation = choice_operation_route_menu(route_name, station_name)
     route = get_route_by_name(route_name)
-    action_operation_route_menu(route, operation, station_name)
-
-    # добавлять станции в маршрут
-    # удалять станции из маршрута
+    if routes[route]
+      action_operation_route_menu(route, operation, station_name)
+    else
+      puts "Такого маршрута #{route_name} не существует"
+    end
   end
 end
