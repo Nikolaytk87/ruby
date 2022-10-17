@@ -9,10 +9,6 @@ class Station
     @@stations
   end
 
-  def self.stations
-    @@stations
-  end
-
   def initialize(name)
     @name = name
     @trains = { cargo: [], passenger: [] }

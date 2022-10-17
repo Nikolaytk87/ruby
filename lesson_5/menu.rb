@@ -21,7 +21,7 @@ class Menu < Texts
   include TrainMenu
   def initialize
     @wagons = Wagon.wagons
-    @stations = Station.stations
+    @stations = Station.all
     @trains = Train.trains
     @routes = Route.routes
   end
