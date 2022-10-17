@@ -1,7 +1,13 @@
+require_relative 'counter.rb'
 class Station
+  include InstanceCounter
   @@stations = {}
   attr_accessor :trains
   attr_reader :name
+
+  def self.all
+    @@stations
+  end
 
   def self.stations
     @@stations

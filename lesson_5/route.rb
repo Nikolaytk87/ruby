@@ -1,4 +1,6 @@
+require_relative 'counter.rb'
 class Route
+  include InstanceCounter
   @@routes = {}
   attr_reader :stations
   attr_accessor :name

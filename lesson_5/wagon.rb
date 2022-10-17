@@ -1,4 +1,6 @@
+require_relative 'manufacturer.rb'
 class Wagon
+  include Manufacturer
   @@wagons = {}
   attr_reader :number, :type
 
