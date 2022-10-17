@@ -1,5 +1,4 @@
 module InstanceCounter
-  @count_instance = 0
   class << self
     def included(base)
       base.extend ClassMethods
