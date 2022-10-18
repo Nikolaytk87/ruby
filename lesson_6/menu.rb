@@ -94,7 +94,7 @@ class Menu < Texts
 
   def choice_show_menu(user_choise)
     case user_choise
-    when "0" then show_list_stations
+    when "0" then show_stations
     when "1" then show_list_trains_by_station
     else
       puts "Такого выбора #{user_choise} нет."

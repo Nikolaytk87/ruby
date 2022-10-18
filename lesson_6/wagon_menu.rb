@@ -6,8 +6,7 @@ module WagonMenu
     puts params_object_text["wagon"]
     number, type = gets.chomp.split(",")
     type = type.downcase.to_sym
-    wagon = create_wagon_by_type(number, type)
-    wagons[number] = wagon
+    create_wagon_by_type(number, type)
     puts "Создан вагон с номером #{number}, типом #{type}"
   end
 
@@ -26,6 +25,10 @@ module WagonMenu
 
   def show_wagon_numbers
     puts "Показываю список вагонов"
-    wagons.each_key { |number| puts "Вагон №: #{number}" }
+    wagons.each { |wagon| puts "Вагон №: #{wagon.number}" }
+  end
+
+  def get_wagon_by_number(number)
+    wagons.find { |wagon| wagon.number = number }
   end
 end

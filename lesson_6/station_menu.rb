@@ -20,17 +20,12 @@ module StationMenu
   end
 
   def get_station_by_name(name)
-    stations[name]
+    stations.find { |station| station.name == name }
   end
 
   def show_stations
     puts "Список станций:"
-    stations.each_key { |name| puts name }
-  end
-
-  def show_list_stations
-    puts "Список станций:"
-    stations.each_key { |name| puts name }
+    stations.each { |station| puts station.name }
   end
 
   def choice_show_station
@@ -56,14 +51,5 @@ module StationMenu
   def choice_station_name
     puts "Введите название станции с которой хотите выполнить операцию"
     gets.chomp
-  end
-
-  def get_station(station_name)
-    station = stations[station_name]
-    if station
-      return station
-    else
-      create_station(station_name)
-    end
   end
 end

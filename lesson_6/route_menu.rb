@@ -27,24 +27,28 @@ module RouteMenu
     gets.chomp
   end
 
-  def choice_operation_route_menu(choiced_route, station)
-    puts "Введите add, если хотите добавить станцию #{station} в маршрут #{choiced_route}\n" \
-         "Введите del, если хотите удалить станцию #{station} из маршрута #{choiced_route}"
+  def choice_operation_route_menu(choiced_route, station_name)
+    puts "Введите add, если хотите добавить станцию #{station_name} в маршрут #{choiced_route}\n" \
+         "Введите del, если хотите удалить станцию #{station_name} из маршрута #{choiced_route}"
     gets.chomp
   end
 
   def action_operation_route_menu(route, action, station_name)
+    station = get_station_by_name(station_name)
     case action
     when "add"
-      station = get_station(station_name)
-      route.add_station(station)
+      if station
+        route.add_station(station)
+      else
+        puts "Такой станции нет"
+      end
     when "del"
-      route.del_station(stations[station_name])
+      route.del_station(station)
     end
   end
 
   def get_route_by_name(name)
-    routes[name]
+    routes.find { |route| route.name == name }
   end
 
   def operation_route
@@ -54,10 +58,10 @@ module RouteMenu
     station_name = choice_station_name
     operation = choice_operation_route_menu(route_name, station_name)
     route = get_route_by_name(route_name)
-    if routes[route]
+    if route
       action_operation_route_menu(route, operation, station_name)
     else
-      puts "Такого маршрута #{route_name} не существует"
+      puts "Маршрута #{route_name} не существует"
     end
   end
 end

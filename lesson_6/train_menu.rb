@@ -21,9 +21,13 @@ module TrainMenu
     end
   end
 
+  def get_train_by_number(number)
+    trains.find { |train| train.number == number }
+  end
+
   def show_trains
     puts "Вывожу список всех поездов: "
-    trains.each_key { |name| puts "Поезд №: #{name}" }
+    trains.each { |train| puts "Поезд №: #{train.number}" }
   end
 
   def input_operation_train
@@ -38,17 +42,17 @@ module TrainMenu
 
   def operation_wagon(operation, train)
     show_wagon_numbers
-    wagon_name = input_wagon_name
-    unless wagons.keys.include?(wagon_name)
-      puts "Вагона с таким номером не существует"
+    wagon_number = input_wagon_name
+    wagon = get_wagon_by_number(wagon_number)
+    unless wagon
+      puts "Вагона с  номером #{wagon_number} не существует"
     else
-      wagon = wagons[wagon_name]
       if operation == "mount"
         train.add_wagon(wagon)
       elsif operation == "unmount"
         train.del_wagon(wagon)
       else
-        puts "Такого вагона нет, создайте его"
+        puts "Не удалось распознать операцию: #{operation}"
       end
     end
   end
@@ -56,8 +60,8 @@ module TrainMenu
   def operation_add_route(train)
     show_routes
     route_name = choice_route
-    if routes.keys.include?(route_name)
-      route = routes[route_name]
+    route = get_route_by_name(route_name)
+    if route
       train.add_route(route)
       puts "Маршрут #{route.name} добавлен к поезду #{train.number}"
     else
@@ -68,12 +72,12 @@ module TrainMenu
   def operation_train
     show_trains
     train_number = input_operation_train
-    train = trains[train_number]
+    train = get_train_by_number(train_number)
     if train
       action = action_operation_train
       choice_operation_train_menu(action, train)
     else
-      puts "Поезда с таким номером нет"
+      puts "Поезда с номером #{train_number} нет"
     end
   end
 
