@@ -12,7 +12,7 @@ module RouteMenu
 
   def show_routes
     puts "Список маршрутов:"
-    routes.each_key { |name| puts "Имя маршрута: #{name}" }
+    routes.each { |route| puts "Имя маршрута: #{route.name}" }
   end
 
   def check_routes

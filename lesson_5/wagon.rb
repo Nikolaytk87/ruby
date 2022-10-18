@@ -1,7 +1,7 @@
 require_relative 'manufacturer.rb'
 class Wagon
   include Manufacturer
-  @@wagons = {}
+  @@wagons = []
   attr_reader :number, :type
 
   def self.wagons
@@ -10,6 +10,6 @@ class Wagon
 
   def initialize(number)
     @number = number
-    @@wagons[number] = self
+    @@wagons << self
   end
 end

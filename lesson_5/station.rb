@@ -1,7 +1,7 @@
-require_relative 'counter.rb'
+require_relative 'instance_counter.rb'
 class Station
   include InstanceCounter
-  @@stations = {}
+  @@stations = []
   attr_accessor :trains
   attr_reader :name
 
@@ -12,7 +12,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = { cargo: [], passenger: [] }
-    @@stations[name] = self
+    @@stations << self
   end
 
   def trains_by_type(type)

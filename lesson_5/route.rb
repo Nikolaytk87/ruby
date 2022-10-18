@@ -1,7 +1,7 @@
-require_relative 'counter.rb'
+require_relative 'instance_counter.rb'
 class Route
   include InstanceCounter
-  @@routes = {}
+  @@routes = []
   attr_reader :stations
   attr_accessor :name
 
@@ -14,7 +14,7 @@ class Route
     @last_station = last_station
     @stations = [first_station, last_station]
     @name = "#{first_station.name}_#{last_station.name}"
-    @@routes[name] = self
+    @@routes << self
   end
 
   def add_station(station)

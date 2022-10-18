@@ -1,14 +1,14 @@
-require_relative 'counter.rb'
+require_relative 'instance_counter.rb'
 require_relative "manufacturer.rb"
 class Train
   include Manufacturer
   include InstanceCounter
-  @@trains = {}
+  @@trains = []
   attr_accessor :current_station, :speed, :route
   attr_reader :wagons, :number, :type
 
   def self.find(number)
-    trains[number]
+    trains.find { |train| train.number == number }
   end
 
   def self.trains
@@ -19,8 +19,8 @@ class Train
     @number = number
     @speed = 0
     @wagons = []
-    @@trains[number] = self
-    self.register_instance
+    @@trains << self
+    register_instance
   end
 
   def stop
