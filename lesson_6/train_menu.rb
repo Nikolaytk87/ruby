@@ -2,14 +2,22 @@ require_relative 'train.rb'
 
 module TrainMenu
   def create_train
-    puts params_object_text["train"]
-    number, type = gets.chomp.split(",")
-    unless number && type
-      puts "Неверный формат ввода"
-    else
+    attempt = 0
+    begin
+      puts params_object_text["train"]
+      number, type = gets.chomp.split(",")
+      type.strip!
+      number.strip!
+      validate_exist(type, "type")
+      validate_exist(number, "type")
       type = type.downcase.to_sym
+      validate_type(type)
       create_train_by_type(number, type)
       puts "Создан поезд с номером #{number}, типом #{type}"
+    rescue ArgumentError, TypeError => e
+      attempt += 1
+      puts "Exception: #{e.message}"
+      retry if attempt < 5
     end
   end
 

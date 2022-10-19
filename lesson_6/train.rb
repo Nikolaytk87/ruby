@@ -1,8 +1,10 @@
 require_relative 'instance_counter.rb'
-require_relative "manufacturer.rb"
+require_relative 'manufacturer.rb'
+require_relative 'validating.rb'
 class Train
   include Manufacturer
   include InstanceCounter
+  include Validating
   @@trains = []
   attr_accessor :current_station, :speed, :route
   attr_reader :wagons, :number, :type
@@ -19,8 +21,19 @@ class Train
     @number = number
     @speed = 0
     @wagons = []
+    validate!
     @@trains << self
     register_instance
+  end
+
+  def validate!
+    min_length = 5
+    validate_exist(type, "type")
+    validate_exist(number, "number")
+    validate_length(number, "number", min_length)
+    validate_train_number(number)
+    validate_type(type)
+    validate_train_number(number)
   end
 
   def stop
