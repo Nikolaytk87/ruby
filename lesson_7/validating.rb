@@ -13,6 +13,15 @@ end
       raise ArgumentError, "Argument: #{title} must be non-zero" if data.nil?
     end
 
+    def validate_empty_volume(amount_of_volume)
+      raise ArgumentError,
+            "Exception: No such free volume #{amount_of_volume} in this Wagon." unless empty_volume >= amount_of_volume
+    end
+
+    def validate_empty_seats
+      raise ArgumentError, "Exception: No more empty seats" if empty_seats == 0
+    end
+
     def validate_length(data, title, min_length = 5)
       raise TypeError,
             "Argument: #{title} must be more than #{min_length} characters long" if data.length < min_length
