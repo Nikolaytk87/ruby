@@ -108,22 +108,4 @@ class Menu < Texts
   def exit_menu
     puts buy_text
   end
-
-  def seed
-    train1 = PassengerTrain.new("Jhi67")
-    train2 = CargoTrain.new("Jhi68")
-    krasnogorskaya = Station.new("Krasnogorskaya")
-    podolsk = Station.new("Podolsk")
-    nahabino = Station.new("Nahabino")
-    tushino = Station.new("Tushino")
-    route_podolsk_nahabino = Route.new(podolsk, nahabino)
-    wagon1 = PassengerWagon.new("hj67kdd", 60)
-    wagon2 = PassengerWagon.new("An87s9", 183)
-    route_podolsk_nahabino.add_station(tushino)
-    route_podolsk_nahabino.add_station(krasnogorskaya)
-    train1.add_route(route_podolsk_nahabino)
-    train2.add_route(route_podolsk_nahabino)
-    train1.add_wagon(wagon1)
-    train1.add_wagon(wagon2)
-  end
 end
