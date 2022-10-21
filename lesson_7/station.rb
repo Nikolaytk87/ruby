@@ -18,6 +18,10 @@ class Station
     @@stations << self
   end
 
+  def gettrains
+    trains.values.flatten.each { |train| yield train }
+  end
+
   def validate!
     min_length = 4
     validate_exist(name, "name")

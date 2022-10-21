@@ -82,6 +82,7 @@ class Menu < Texts
     case object_name
     when "train" then operation_train
     when "route" then operation_route
+    when "wagon" then operation_wagon
     else
       puts "Такого выбора #{object_name} нет."
     end
@@ -96,8 +97,9 @@ class Menu < Texts
 
   def choice_show_menu(user_choise)
     case user_choise
-    when "0" then show_stations
-    when "1" then show_list_trains_by_station
+    when "1" then show_stations
+    when "2" then show_list_trains_by_station
+    when "3" then show_list_wagons_by_train
     else
       puts "Такого выбора #{user_choise} нет."
     end
@@ -105,5 +107,23 @@ class Menu < Texts
 
   def exit_menu
     puts buy_text
+  end
+
+  def seed
+    train1 = PassengerTrain.new("Jhi67")
+    train2 = CargoTrain.new("Jhi68")
+    krasnogorskaya = Station.new("Krasnogorskaya")
+    podolsk = Station.new("Podolsk")
+    nahabino = Station.new("Nahabino")
+    tushino = Station.new("Tushino")
+    route_podolsk_nahabino = Route.new(podolsk, nahabino)
+    wagon1 = PassengerWagon.new("hj67kdd", 60)
+    wagon2 = PassengerWagon.new("An87s9", 183)
+    route_podolsk_nahabino.add_station(tushino)
+    route_podolsk_nahabino.add_station(krasnogorskaya)
+    train1.add_route(route_podolsk_nahabino)
+    train2.add_route(route_podolsk_nahabino)
+    train1.add_wagon(wagon1)
+    train1.add_wagon(wagon2)
   end
 end

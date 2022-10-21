@@ -36,13 +36,12 @@ module StationMenu
   def show_list_trains_by_station
     show_stations
     station_name = choice_show_station
-    station = stations[station_name]
+    station = get_station_by_name(station_name)
     unless station.nil?
       puts "Список поездов на станции #{station_name}:"
-      puts "Грузовые поезда:"
-      station.trains_by_type(:cargo).each { |train| puts train.number }
-      puts "Пассажирские поезда:"
-      station.trains_by_type(:passenger).each { |train| puts train.number }
+      station.gettrains { |train|
+        puts "Номер поезда: #{train.number} Тип поезда: #{train.type} Количество вагонов: #{train.wagons.size}"
+      }
     else
       puts "Такой станции #{station} нет"
     end

@@ -36,6 +36,10 @@ class Train
     validate_train_number(number)
   end
 
+  def getwagons
+    wagons.each { |wagon| yield wagon }
+  end
+
   def stop
     self.speed = 0
   end
