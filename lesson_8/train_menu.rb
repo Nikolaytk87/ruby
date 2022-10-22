@@ -1,15 +1,13 @@
-require_relative 'train.rb'
+require_relative 'train'
 
 module TrainMenu
   def create_train
     attempt = 0
     begin
-      puts params_object_text["train"]
-      number, type = gets.chomp.split(",")
-      type.strip!
-      number.strip!
-      validate_exist(type, "type")
-      validate_exist(number, "type")
+      puts params_object_text['train']
+      number, type = gets.gsub(/\s/, '').split(',')
+      validate_exist(type, 'type')
+      validate_exist(number, 'type')
       type = type.downcase.to_sym
       validate_type(type)
       create_train_by_type(number, type)
@@ -22,10 +20,9 @@ module TrainMenu
   end
 
   def create_train_by_type(number, type)
-    if type == :cargo
-      CargoTrain.new(number)
-    elsif type == :passenger
-      PassengerTrain.new(number)
+    case type
+    when :cargo then CargoTrain.new(number)
+    when :passenger then PassengerTrain.new(number)
     end
   end
 
@@ -34,12 +31,12 @@ module TrainMenu
   end
 
   def show_trains
-    puts "Вывожу список всех поездов: "
+    puts 'Вывожу список всех поездов: '
     trains.each { |train| puts "Поезд №: #{train.number} Тип поезда: #{train.type}" }
   end
 
   def input_train
-    puts "Укажите номер поезда"
+    puts 'Укажите номер поезда'
     gets.chomp
   end
 
@@ -52,16 +49,14 @@ module TrainMenu
     show_wagon
     wagon_number = input_wagon_name
     wagon = get_wagon_by_number(wagon_number)
-    unless wagon
-      puts "Вагона с  номером #{wagon_number} не существует"
-    else
-      if operation == "mount"
-        train.add_wagon(wagon)
-      elsif operation == "unmount"
-        train.del_wagon(wagon)
-      else
-        puts "Не удалось распознать операцию: #{operation}"
+    if wagon
+      case operation
+      when 'mount' then train.add_wagon(wagon)
+      when 'unmount'then train.del_wagon(wagon)
+      else puts "Не удалось распознать операцию: #{operation}"
       end
+    else
+      puts "Вагона с  номером #{wagon_number} не существует"
     end
   end
 
@@ -82,9 +77,10 @@ module TrainMenu
     train = get_train_by_number(input_train)
     train.getwagons do |wagon|
       msg = "Номер вагона: #{wagon.number}, Тип вагона: #{wagon.type}"
-      if wagon.type == :cargo
+      case wagon.type
+      when :cargo
         puts msg + " Кол-во свободного объема: #{wagon.empty_volume}, Кол-во занятого объема: #{wagon.occupied_volume}"
-      elsif wagon.type == :passenger
+      when :passenger
         puts msg + " Кол-во свободных место: #{wagon.empty_seats}, Кол-во занятых мест: #{wagon.occupied_seats}"
       end
     end
@@ -103,7 +99,7 @@ module TrainMenu
   end
 
   def operation_move(action, train)
-    if action == "forward"
+    if action == 'forward'
       train.move_forward
     else
       train.move_back
@@ -112,11 +108,11 @@ module TrainMenu
 
   def choice_operation_train_menu(action, train)
     case action
-    when "1" then action_on_wagon("mount", train)
-    when "2" then action_on_wagon("unmount", train)
-    when "3" then operation_add_route(train)
-    when "4" then operation_move("forward", train)
-    when "5" then operation_move("back", train)
+    when '1' then action_on_wagon('mount', train)
+    when '2' then action_on_wagon('unmount', train)
+    when '3' then operation_add_route(train)
+    when '4' then operation_move('forward', train)
+    when '5' then operation_move('back', train)
     else
       puts "Такого выбора #{action} нет."
     end

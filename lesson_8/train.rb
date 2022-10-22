@@ -1,6 +1,6 @@
-require_relative 'instance_counter.rb'
-require_relative 'manufacturer.rb'
-require_relative 'validating.rb'
+require_relative 'instance_counter'
+require_relative 'manufacturer'
+require_relative 'validating'
 class Train
   include Manufacturer
   include InstanceCounter
@@ -27,17 +27,16 @@ class Train
   end
 
   def validate!
-    min_length = 5
-    validate_exist(type, "type")
-    validate_exist(number, "number")
-    validate_length(number, "number", min_length)
+    validate_exist(type, 'type')
+    validate_exist(number, 'number')
+    validate_length(number, 'number', min_length: 5)
     validate_train_number(number)
     validate_type(type)
     validate_train_number(number)
   end
 
-  def getwagons
-    wagons.each { |wagon| yield wagon }
+  def getwagons(&block)
+    wagons.each(&block)
   end
 
   def stop
@@ -45,11 +44,11 @@ class Train
   end
 
   def add_wagon(wagon)
-    wagons << wagon if wagon.type == self.type && speed.zero?
+    wagons << wagon if wagon.type == type && speed.zero?
   end
 
   def del_wagon(wagon)
-    wagons.delete(wagon) if wagon.type == self.type && speed.zero?
+    wagons.delete(wagon) if wagon.type == type && speed.zero?
   end
 
   def add_route(route)
@@ -59,39 +58,32 @@ class Train
   end
 
   def move_forward
-    if next_station
-      current_station.sending_train(self)
-      self.current_station = next_station
-      current_station.take_train(self)
-    end
+    return unless next_station
+
+    current_station.sending_train(self)
+    self.current_station = next_station
+    current_station.take_train(self)
   end
 
   def move_back
-    if previous_station
-      current_station.sending_train(self)
-      self.current_station = previous_station
-      current_station.take_train(self)
-    end
+    return unless previous_station
+
+    current_station.sending_train(self)
+    self.current_station = previous_station
+    current_station.take_train(self)
   end
 
   protected
 
-  # Отнес эти два метода к protected, так как они нужны для внутренних целей,
-  # но будут использоваться у потомков
-
   def previous_station
     previous_index = route.stations.index(current_station) - 1
     previous_station = route.stations[previous_index]
-    if previous_index >= 0 && (not previous_station.nil?)
-      previous_station
-    end
+    previous_station if previous_index >= 0 && !previous_station.nil?
   end
 
   def next_station
     next_index = route.stations.index(current_station) + 1
     next_station = route.stations[next_index]
-    unless next_station.nil?
-      next_station
-    end
+    next_station unless next_station.nil?
   end
 end

@@ -1,13 +1,13 @@
-require_relative "wagon.rb"
-require_relative "validating.rb"
+require_relative 'wagon'
+require_relative 'validating'
 
 class PassengerWagon < Wagon
   include Validating
   attr_reader :occupied_seats, :empty_seats, :seats
 
-  def initialize(number, seats)
+  def initialize(number, options = {})
     @type = :passenger
-    @seats = seats
+    @seats = options[:seats] || 78
     @occupied_seats = 0
     @empty_seats = seats
     super(number)

@@ -1,5 +1,5 @@
-require_relative 'instance_counter.rb'
-require_relative 'validating.rb'
+require_relative 'instance_counter'
+require_relative 'validating'
 class Station
   include InstanceCounter
   include Validating
@@ -18,14 +18,13 @@ class Station
     @@stations << self
   end
 
-  def gettrains
-    trains.values.flatten.each { |train| yield train }
+  def gettrains(&block)
+    trains.values.flatten.each(&block)
   end
 
   def validate!
-    min_length = 4
-    validate_exist(name, "name")
-    validate_length(name, "name", min_length)
+    validate_exist(name, 'name')
+    validate_length(name, 'name', min_length: 4)
   end
 
   def trains_by_type(type)

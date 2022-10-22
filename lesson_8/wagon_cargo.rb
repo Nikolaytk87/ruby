@@ -1,13 +1,13 @@
-require_relative "wagon.rb"
-require_relative "validating.rb"
+require_relative 'wagon'
+require_relative 'validating'
 
 class CargoWagon < Wagon
   include Validating
   attr_reader :volume, :empty_volume, :occupied_volume
 
-  def initialize(number, volume)
-    @volume = volume
-    @empty_volume = volume
+  def initialize(number, options = {})
+    @volume = options[:volume] || 60
+    @empty_volume = @volume
     @occupied_volume = 0
     @type = :cargo
     super(number)

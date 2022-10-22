@@ -1,3 +1,3 @@
-require_relative "menu.rb"
+require_relative 'menu'
 
 Menu.new.main_menu

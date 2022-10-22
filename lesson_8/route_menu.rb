@@ -1,9 +1,9 @@
-require_relative 'route.rb'
+require_relative 'route'
 module RouteMenu
   def create_route
-    puts "Создаем первую станцию маршрута"
+    puts 'Создаем первую станцию маршрута'
     first_station = create_station
-    puts "Создаем последнюю станцию маршрута"
+    puts 'Создаем последнюю станцию маршрута'
     last_station = create_station
     route = Route.new(first_station, last_station)
 
@@ -11,19 +11,19 @@ module RouteMenu
   end
 
   def show_routes
-    puts "Список маршрутов:"
+    puts 'Список маршрутов:'
     routes.each { |route| puts "Имя маршрута: #{route.name}" }
   end
 
   def check_routes
-    if routes.empty?
-      puts "Маршруты отсутствуют!\nСоздайте маршрут"
-      create_route
-    end
+    return unless routes.empty?
+
+    puts "Маршруты отсутствуют!\nСоздайте маршрут"
+    create_route
   end
 
   def choice_route
-    puts "Введите название маршрута над которым хотите совершить операцию"
+    puts 'Введите название маршрута над которым хотите совершить операцию'
     gets.chomp
   end
 
@@ -36,13 +36,13 @@ module RouteMenu
   def action_operation_route_menu(route, action, station_name)
     station = get_station_by_name(station_name)
     case action
-    when "add"
+    when 'add'
       if station
         route.add_station(station)
       else
-        puts "Такой станции нет"
+        puts 'Такой станции нет'
       end
-    when "del"
+    when 'del'
       route.del_station(station)
     end
   end

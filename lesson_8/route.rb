@@ -1,6 +1,6 @@
-require_relative 'instance_counter.rb'
-require_relative 'validating.rb'
-require_relative 'station.rb'
+require_relative 'instance_counter'
+require_relative 'validating'
+require_relative 'station'
 class Route
   include InstanceCounter
   include Validating

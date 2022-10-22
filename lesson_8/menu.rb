@@ -1,17 +1,17 @@
-require_relative 'route.rb'
-require_relative 'station.rb'
-require_relative 'train.rb'
-require_relative 'train_cargo.rb'
-require_relative 'train_pass.rb'
-require_relative 'wagon.rb'
-require_relative 'wagon_cargo.rb'
-require_relative 'wagon_pass.rb'
-require_relative 'wagon_menu.rb'
-require_relative 'station_menu.rb'
-require_relative 'train_menu.rb'
-require_relative 'route_menu.rb'
-require_relative 'texts.rb'
-require_relative 'validating.rb'
+require_relative 'route'
+require_relative 'station'
+require_relative 'train'
+require_relative 'train_cargo'
+require_relative 'train_pass'
+require_relative 'wagon'
+require_relative 'wagon_cargo'
+require_relative 'wagon_pass'
+require_relative 'wagon_menu'
+require_relative 'station_menu'
+require_relative 'train_menu'
+require_relative 'route_menu'
+require_relative 'texts'
+require_relative 'validating'
 
 class Menu < Texts
   attr_accessor :wagons, :trains, :stations, :routes
@@ -31,10 +31,10 @@ class Menu < Texts
   def main_menu
     action = start_choise
     case action
-    when "0"then exit_menu
-    when "1" then create_menu
-    when "2" then operations_menu
-    when "3" then show_menu
+    when '0'then exit_menu
+    when '1' then create_menu
+    when '2' then operations_menu
+    when '3' then show_menu
     else puts choise_not_found_text
     end
   end
@@ -55,17 +55,17 @@ class Menu < Texts
     puts back_menu_text
     choice = gets.chomp
     case choice
-    when "0" then exit_menu
-    when "1" then main_menu
+    when '0' then exit_menu
+    when '1' then main_menu
     end
   end
 
   def choice_create_menu(object)
     case object
-    when "train" then create_train
-    when "wagon" then create_wagon
-    when "station" then create_station
-    when "route" then create_route
+    when 'train' then create_train
+    when 'wagon' then create_wagon
+    when 'station' then create_station
+    when 'route' then create_route
     else
       puts "Такого выбора #{object} нет."
     end
@@ -80,9 +80,9 @@ class Menu < Texts
 
   def choice_operations_menu(object_name)
     case object_name
-    when "train" then operation_train
-    when "route" then operation_route
-    when "wagon" then operation_wagon
+    when 'train' then operation_train
+    when 'route' then operation_route
+    when 'wagon' then operation_wagon
     else
       puts "Такого выбора #{object_name} нет."
     end
@@ -97,9 +97,9 @@ class Menu < Texts
 
   def choice_show_menu(user_choise)
     case user_choise
-    when "1" then show_stations
-    when "2" then show_list_trains_by_station
-    when "3" then show_list_wagons_by_train
+    when '1' then show_stations
+    when '2' then show_list_trains_by_station
+    when '3' then show_list_wagons_by_train
     else
       puts "Такого выбора #{user_choise} нет."
     end

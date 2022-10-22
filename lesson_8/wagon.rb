@@ -1,5 +1,5 @@
-require_relative 'manufacturer.rb'
-require_relative 'validating.rb'
+require_relative 'manufacturer'
+require_relative 'validating'
 class Wagon
   include Manufacturer
   include Validating
@@ -17,9 +17,9 @@ class Wagon
   end
 
   def validate!
-    validate_exist(type, "type")
-    validate_exist(number, "number")
-    validate_length(number, "number")
+    validate_exist(type, 'type')
+    validate_exist(number, 'number')
+    validate_length(number, 'number')
     validate_type(type)
   end
 end

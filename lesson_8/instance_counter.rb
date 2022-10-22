@@ -12,7 +12,7 @@ end
     end
 
     def add_instance
-      @instances = self.instances + 1
+      @instances = instances + 1
     end
   end
 
