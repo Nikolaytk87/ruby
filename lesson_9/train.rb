@@ -1,13 +1,18 @@
 require_relative 'instance_counter'
 require_relative 'manufacturer'
 require_relative 'validating'
+require_relative 'accessors'
 class Train
   include Manufacturer
   include InstanceCounter
   include Validating
+  include Accessors
   @@trains = []
-  attr_accessor :current_station, :speed, :route
-  attr_reader :wagons, :number, :type
+  attr_accessor :current_station, :speed, :route, :number
+  attr_reader :wagons, :type
+
+  attr_accessor_with_history :shell
+  strong_attr_accessor :num, Integer
 
   def self.find(number)
     trains.find { |train| train.number == number }
@@ -21,7 +26,7 @@ class Train
     @number = number
     @speed = 0
     @wagons = []
-    validate!
+    # validate!
     @@trains << self
     register_instance
   end

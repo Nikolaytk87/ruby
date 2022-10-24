@@ -33,6 +33,13 @@ end
       raise TypeError, "Argument: type must be cargo or passsenger   NOT #{type}" unless TYPES.include?(type)
     end
 
+    def validate_class(obj, cls)
+      return unless obj.class != cls
+
+      raise TypeError,
+            "The Value  #{obj.inspect} must be #{cls}, not #{obj.class}"
+    end
+
     def validate_class_membership(obj, obj_class)
       raise TypeError, "#{obj} is not a class of  #{obj_class}" unless obj.instance_of?(obj_class)
     end
