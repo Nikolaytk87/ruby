@@ -11,7 +11,6 @@ require_relative 'station_menu'
 require_relative 'train_menu'
 require_relative 'route_menu'
 require_relative 'texts'
-require_relative 'validating'
 
 class Menu < Texts
   attr_accessor :wagons, :trains, :stations, :routes
@@ -20,7 +19,6 @@ class Menu < Texts
   include StationMenu
   include RouteMenu
   include TrainMenu
-  include Validating
   def initialize
     @wagons = Wagon.wagons
     @stations = Station.all

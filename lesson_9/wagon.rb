@@ -1,8 +1,8 @@
 require_relative 'manufacturer'
-require_relative 'validating'
+require_relative 'validation'
 class Wagon
   include Manufacturer
-  include Validating
+  include Validation
   @@wagons = []
   attr_reader :number, :type
 
@@ -12,14 +12,7 @@ class Wagon
 
   def initialize(number)
     @number = number
-    @@wagons << self
     validate!
-  end
-
-  def validate!
-    validate_exist(type, 'type')
-    validate_exist(number, 'number')
-    validate_length(number, 'number')
-    validate_type(type)
+    @@wagons << self
   end
 end

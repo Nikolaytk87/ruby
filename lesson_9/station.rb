@@ -1,11 +1,15 @@
 require_relative 'instance_counter'
-require_relative 'validating'
+require_relative 'validation'
 class Station
   include InstanceCounter
-  include Validating
+  include Validation
   @@stations = []
   attr_accessor :trains
   attr_reader :name
+
+  validate :name, :presence
+  validate :name, :type, String
+  validate :name, :format, /^[a-z]{3,10}-?[a-z0-9]{0,2}$/i
 
   def self.all
     @@stations
@@ -20,11 +24,6 @@ class Station
 
   def gettrains(&block)
     trains.values.flatten.each(&block)
-  end
-
-  def validate!
-    validate_exist(name, 'name')
-    validate_length(name, 'name', min_length: 4)
   end
 
   def trains_by_type(type)

@@ -6,89 +6,51 @@ module Validation
     end
   end
   module ClassMethods
-    attr_accessor :type_attrs, :format_attrs, :presence_attrs
+    attr_accessor :validation_attrs
 
     def validate(name, check, advanced = nil)
-      self.presence_attrs ||= []
-      self.format_attrs ||= []
-      self.type_attrs ||= []
-      var_name = "@#{name}".to_sym
-      case check
-      when :presence then presence_attrs << [name]
-      when :type then type_attrs << [name, advanced]
-      when :format then format_attrs << [name, advanced]
-      end
+      self.validation_attrs ||= []
+      validation_attrs << [name, check, advanced]
     end
   end
 
   module InstanceMethods
-    def validate_type_attr
-      self.class.type_attrs.each do |name, cls|
+    def validate!
+      self.class.validation_attrs.each do |name, check, advanced|
         value = instance_variable_get("@#{name}")
-        next  if !value.nil? && value.instance_of?(cls)
-
-        raise ArgumentError, "Value #{name}: #{value} is #{value.class} not #{cls}"
+        case check
+        when :presence then validate_presence_attr(name, value)
+        when :type then validate_type_attr(name, value, advanced)
+        when :format then validate_format_attr(name, value, advanced)
+        end
       end
     end
 
-    def validate_format_attr
-      self.class.format_attrs.each do |name, regexp|
-        value = instance_variable_get("@#{name}")
-        next  if value.match?(regexp)
-
-        raise ArgumentError, "Value #{name}: #{value} did not pass the test: #{regexp}"
-      end
+    def valid?
+      validate!
+      true
+    rescue ArgumentError, TypeError
+      false
     end
 
-    def validate_presence_attr
-      self.class.presence_attrs.each do |name, _|
-        value = instance_variable_get("@#{name}")
-        next unless value.nil? || value == ''
+    def validate_type_attr(name, value, cls)
+      return if !value.nil? && value.instance_of?(cls)
 
-        raise ArgumentError,
-              "Argument #{name} must be non-zero and not empty string"
-      end
+      raise ArgumentError, "Value #{name}: #{value} is #{value.class} not #{cls}"
+    end
+
+    def validate_format_attr(name, value, regexp)
+      valid_type = value.instance_of?(String) || value.instance_of?(Symbol)
+      return if valid_type && value.match?(regexp)
+
+      raise ArgumentError, "Value #{name}: #{value} did not pass the test: #{regexp}"
+    end
+
+    def validate_presence_attr(name, value)
+      return unless value.nil? || value == ''
+
+      raise ArgumentError,
+            "Argument #{name} must be non-zero and not empty string"
     end
   end
 end
-
-# def validate_exist(data, title)
-#   raise ArgumentError, "Argument: #{title} must be non-zero" if data.nil?
-# end
-
-# def validate_empty_volume(amount_of_volume)
-#   return if empty_volume >= amount_of_volume
-
-#   raise ArgumentError, "Exception: No such free volume #{amount_of_volume} in this Wagon."
-# end
-
-# def validate_empty_seats
-#   raise ArgumentError, 'Exception: No more empty seats' if empty_seats.zero?
-# end
-
-# def validate_length(data, title, min_length: 5)
-#   return unless data.length < min_length
-
-#   raise TypeError, "Argument: #{title} must be more than #{min_length} characters long"
-# end
-
-# def validate_type(type)
-#   raise TypeError, "Argument: type must be cargo or passsenger   NOT #{type}" unless TYPES.include?(type)
-# end
-
-# def validate_class(obj, cls)
-#   return unless obj.class != cls
-
-#   raise TypeError,
-#         "The Value  #{obj.inspect} must be #{cls}, not #{obj.class}"
-# end
-
-# def validate_class_membership(obj, obj_class)
-#   raise TypeError, "#{obj} is not a class of  #{obj_class}" unless obj.instance_of?(obj_class)
-# end
-
-# def validate_train_number(number)
-#   return if number.match?(FORMAT_TRAIN_NUMBER)
-
-#   raise ArgumentError, "Argument: number should be in the following format 'XXX-XX'"
-# end
