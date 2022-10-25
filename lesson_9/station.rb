@@ -1,11 +1,16 @@
 require_relative 'instance_counter'
 require_relative 'validation'
+require_relative 'accessors'
 class Station
   include InstanceCounter
   include Validation
+  include Accessors
   @@stations = []
   attr_accessor :trains
   attr_reader :name
+
+  attr_accessor_with_history :station_room
+  strong_attr_accessor :amount_of_room, Integer
 
   validate :name, :presence
   validate :name, :type, String

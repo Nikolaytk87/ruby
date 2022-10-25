@@ -1,4 +1,4 @@
-require_relative 'validating'
+require_relative 'validation'
 module Accessors
   class << self
     def included(base)
@@ -8,7 +8,7 @@ module Accessors
 end
 
   module ClassMethods
-    include Validating
+    include Validation
     @@values = []
     def attr_accessor_with_history(*names)
       names.each do |name|
@@ -26,7 +26,7 @@ end
       name = "@#{attr_name}".to_sym
       define_method(attr_name) { instance_variable_get(name) }
       define_method("#{attr_name}=") do |value|
-        instance_variable_set(name, value) unless validate_class(value, attr_class)
+        instance_variable_set(name, value) unless validate_type(attr_name, value, attr_class)
       end
     end
   end

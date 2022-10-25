@@ -1,12 +1,16 @@
 require_relative 'instance_counter'
 require_relative 'station'
 require_relative 'validation'
+require_relative 'accessors'
 class Route
   include InstanceCounter
   include Validation
+  include Accessors
   @@routes = []
   attr_reader :stations, :first_station, :last_station
   attr_accessor :name
+
+  attr_accessor_with_history :advanced_route
 
   validate :first_station, :type, Station
   validate :last_station, :type, Station
